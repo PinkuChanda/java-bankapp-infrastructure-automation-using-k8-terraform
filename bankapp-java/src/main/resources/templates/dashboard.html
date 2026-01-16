@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard - Union Bank</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="app-shell">
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <a class="navbar-brand" href="#">GoldenCat</a>
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="/dashboard">📊 Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="/transactions">📜 History</a></li>
+        <li class="nav-item"><a class="nav-link" href="/logout">🚪 Logout</a></li>
+    </ul>
+</nav>
+<div class="dashboard-container container">
+    <div class="text-center">
+        <h2 th:text="'Welcome back, ' + ${account.username}" style="margin-bottom:8px"></h2>
+        <h3 class="balance" th:text="'$' + ${account.balance}"></h3>
+        <p style="color:#94a3b8;font-size:14px">Your current account balance</p>
+    </div>
+
+    <div class="cards">
+        <div class="card-glass account-details">
+            <h5>💼 Account Overview</h5>
+            <p><strong>Account #:</strong> <span th:text="${account.id}" style="color:var(--primary-light)"></span></p>
+            <p><strong>Type:</strong> <span style="color:var(--success)">Premium Savings</span></p>
+            <p><strong>Status:</strong> <span style="color:var(--success)">🟢 Active</span></p>
+        </div>
+
+        <div class="card-glass">
+            <h5>💰 Deposit Funds</h5>
+            <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Add money to your account instantly</p>
+            <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#depositForm" aria-expanded="false" aria-controls="depositForm">Open Deposit Form</button>
+            <div class="collapse mt-3" id="depositForm">
+                <form method="post" action="/deposit" class="form-container">
+                    <div class="form-group">
+                        <label>💵 Amount to Deposit</label>
+                        <input type="number" class="form-control" name="amount" placeholder="Enter amount" step="0.01" required />
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block">Confirm Deposit</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card-glass">
+            <h5>🔄 Transfer & Withdraw</h5>
+            <p style="font-size:13px;color:var(--muted);margin-bottom:8px">Send or withdraw funds</p>
+            <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#withdrawForm" aria-expanded="false" aria-controls="withdrawForm">Withdraw</button>
+            <div class="collapse mt-3" id="withdrawForm">
+                <form method="post" action="/withdraw" class="form-container">
+                    <div class="form-group">
+                        <label>💸 Withdrawal Amount</label>
+                        <input type="number" class="form-control" name="amount" placeholder="Enter amount" step="0.01" required />
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block">Process Withdrawal</button>
+                </form>
+            </div>
+
+            <button class="btn btn-primary btn-block mt-2" type="button" data-toggle="collapse" data-target="#transferForm" aria-expanded="false" aria-controls="transferForm">Send Money</button>
+            <div class="collapse mt-3" id="transferForm">
+                <form method="post" action="/transfer" class="form-container">
+                    <div class="form-group">
+                        <label>👤 Recipient Username</label>
+                        <input type="text" class="form-control" name="toUsername" placeholder="Username to transfer to" required />
+                    </div>
+                    <div class="form-group">
+                        <label>💳 Amount</label>
+                        <input type="number" class="form-control" name="amount" placeholder="Enter amount" step="0.01" required />
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block">Send Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <p th:if="${error != null}" th:text="${error}" style="color:var(--danger);text-align:center;margin-top:24px;font-weight:600"></p>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

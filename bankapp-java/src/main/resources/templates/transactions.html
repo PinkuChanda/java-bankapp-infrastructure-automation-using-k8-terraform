@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Transaction History - Union Bank</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="app-shell">
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <a class="navbar-brand" href="#">Union Bank</a>
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="/dashboard">📊 Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="/transactions">📜 History</a></li>
+        <li class="nav-item"><a class="nav-link" href="/logout">🚪 Logout</a></li>
+    </ul>
+</nav>
+<div class="container dashboard-container">
+    <h2 class="text-center" style="margin-bottom:8px">📜 Transaction History</h2>
+    <p class="text-center" style="color:var(--muted);font-size:14px;margin-bottom:32px">Review all your account movements</p>
+    <div class="table-responsive table-custom">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Transaction ID</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Date & Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="transaction : ${transactions}">
+                <td th:text="'#' + ${transaction.id}" style="font-weight:600"></td>
+                <td th:text="${transaction.type}" style="color:var(--primary-light)"></td>
+                <td>
+                    <span th:classappend="${transaction.type.contains('Transfer In') || transaction.type == 'Deposit'} ? 'amount-positive' : 'amount-negative'" th:text="${transaction.type.contains('Transfer In') || transaction.type == 'Deposit'} ? '↓ +$' + transaction.amount : '↑ -$' + transaction.amount"></span>
+                </td>
+                <td th:text="${transaction.timestamp}" style="color:var(--muted);font-size:13px"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p class="text-center" style="margin-top:28px"><a href="/dashboard" class="muted-link">← Back to Dashboard</a></p>
+</div>
+
+</body>
+</html>
