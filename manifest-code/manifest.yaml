@@ -14,7 +14,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: mysql-config
-data:
+data: 
   MYSQL_DATABASE: "bankappdb"
 ---
 # Storage Class for EBS
